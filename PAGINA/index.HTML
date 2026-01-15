@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla Premium | Lorem Ipsum Site</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        :root {
+            --azul-deep: #0f172a;
+            --azul-card: #1e293b;
+            --azul-accent: #2563eb;
+            --verde-wa: #22c55e;
+            --rojo-soft: #ef4444;
+            --naranja-accent: #f59e0b;
+            --purpura-accent: #8b5cf6;
+            --text-main: #334155;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --border-soft: rgba(15, 23, 42, 0.08);
+            --color-1: #3b82f6; --color-2: #10b981; --color-3: #f59e0b; 
+            --color-4: #8b5cf6; --color-5: #f43f5e; 
+        }
+
+        /* CONFIGURACIÓN GENERAL */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden; 
+        }
+
+        /* ===== PRELOADER CENTRADO ===== */
+        #preloader {
+            position: fixed; inset: 0;
+            background-color: var(--azul-deep); 
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 99999;
+        }
+        .loader-logo { color: white; font-family: 'Lexend', sans-serif; font-size: 2.5rem; margin-bottom: 20px; animation: pulse 2s infinite; }
+        .loader-circle { width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top: 3px solid var(--azul-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .fade-out { opacity: 0; visibility: hidden; transition: opacity 0.8s ease; }
+
+        /* ===== NAVEGACIÓN ===== */
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px); z-index: 10000; padding: 1.2rem 5%;
+            display: flex; align-items: center; border-bottom: 1px solid var(--border-soft);
+        }
+        .logo { font-family: 'Lexend'; font-weight: 800; font-size: 1.6rem; color: var(--azul-deep); text-decoration: none; flex: 1; }
+        .logo span { color: var(--azul-accent); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; flex: 2; justify-content: center; }
+        .nav-links a { text-decoration: none; color: var(--azul-deep); font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--azul-accent); }
+        .nav-spacer { flex: 1; }
+
+        /* ===== HEADER ===== */
+        header {
+            position: relative; height: 90vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)), 
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80') center/cover;
+            background-attachment: fixed;
+            clip-path: ellipse(150% 100% at 50% 0%);
+            margin-bottom: 50px;
+        }
+        header h1 { font-family: 'Lexend'; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; }
+        header p { font-size: 1.3rem; max-width: 800px; margin: 0 auto 3rem; opacity: 0.9; }
+
+        .btn-shimmer {
+            text-decoration: none; background: var(--azul-accent); color: white; padding: 1.4rem 3.5rem;
+            border-radius: 18px; font-weight: 700; position: relative; overflow: hidden; display: inline-block;
+            font-family: 'Lexend'; transition: 0.3s;
+        }
+        .btn-shimmer::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent); 
+            transform: skewX(-25deg);
+        }
+        .btn-shimmer:hover::before { left: 150%; transition: 0.8s ease-in-out; }
+        .btn-shimmer:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4); }
+
+        /* ===== SECCIONES ===== */
+        .section-container { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-family: 'Lexend'; font-size: 3.2rem; color: var(--azul-deep); text-align: center; margin-bottom: 5rem; letter-spacing: -1px; }
+
+        /* ESTILO MEJORADO: QUIENES SOMOS */
+        .nosotros-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .nosotros-text h2 { font-family: 'Lexend'; font-weight: 700; font-size: 2.5rem; color: var(--azul-deep); margin-bottom: 1.5rem; }
+        .nosotros-text p { font-family: 'Inter'; font-size: 1.1rem; line-height: 1.8; color: var(--text-main); }
+        .nosotros-image { width: 100%; height: 550px; background: url('https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?auto=format&fit=crop&w=1000') center/cover; border-radius: 40px; box-shadow: 0 25px 50px rgba(0,0,0,0.05); }
+
+        .dif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; text-align: center; }
+        .dif-card { padding: 50px 30px; border-radius: 35px; border: 1px solid var(--border-soft); transition: 0.4s ease; background: var(--white); }
+        .dif-card:hover { transform: translateY(-10px); border-color: var(--azul-accent); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
+        .dif-card i { font-size: 4rem; color: var(--azul-accent); margin-bottom: 2rem; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .dif-card:hover i { transform: rotateY(180deg); color: var(--azul-deep); }
+
+        /* SOLUCIONES */
+        .solutions-wrapper { background-color: var(--bg-light); padding: 120px 0; border-radius: 100px 100px 0 0; }
+        .carousel-window { overflow: hidden; border-radius: 35px; position: relative; }
+        .services-grid { display: flex; gap: 1.5rem; padding: 25px 0; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .service-card { flex: 0 0 320px; padding: 5rem 2rem; border-radius: 40px; text-align: center; color: white; cursor: pointer; transition: 0.4s; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .service-card h3 { font-family: 'Lexend'; font-weight: 600; font-size: 1.2rem; }
+        .service-card:hover { transform: translateY(-15px); }
+        .service-card i { font-size: 4.5rem; margin-bottom: 2rem; transition: 0.5s; }
+        .service-card:hover i { transform: scale(1.2) rotate(10deg); filter: drop-shadow(0 0 10px rgba(255,255,255,0.8)); }
+        
+        .card-1 { background-color: var(--color-1); } .card-2 { background-color: var(--color-2); }
+        .card-3 { background-color: var(--color-3); } .card-4 { background-color: var(--color-4); } .card-5 { background-color: var(--color-5); }
+        
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 65px; height: 65px; background: white; border: none; border-radius: 50%; cursor: pointer; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: 0.3s; color: var(--azul-deep); }
+        .nav-arrow:hover { background: var(--azul-accent); color: white; }
+        .arrow-prev { left: 15px; } .arrow-next { right: 15px; }
+
+        /* ESTILO MEJORADO: PANEL DETALLE */
+        .panel { display: none; margin-top: 5rem; background: var(--azul-deep); border-radius: 50px; overflow: hidden; grid-template-columns: 1fr 1fr; color: white; box-shadow: 0 40px 100px rgba(0,0,0,0.3); }
+        .panel.open { display: grid; animation: fadeInUp 0.7s; }
+        .panel-info { padding: 4.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .panel-info h3 { font-family: 'Lexend'; font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .panel-info p { font-family: 'Inter'; font-size: 1.1rem; line-height: 1.8; font-weight: 300; opacity: 0.95; }
+        .panel-img { background-size: cover; background-position: center; min-height: 500px; }
+
+        /* PASOS */
+        .steps-wrapper { background-color: var(--bg-light); border-radius: 0 0 100px 100px; padding: 120px 0; border-top: 1px solid var(--border-soft); }
+        .steps-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+        .step-card { text-align: center; }
+        .icon-wrapper { 
+            width: 120px; height: 120px; background: var(--azul-accent); color: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 3.5rem; margin: 0 auto 2rem; 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        /* CANALES */
+        .atencion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 5rem; }
+        .atencion-card { background: var(--white); padding: 5rem 2rem; border-radius: 40px; text-align: center; border: 1px solid var(--border-soft); transition: 0.4s; }
+        .atencion-card i { font-size: 5rem; margin-bottom: 2.5rem; transition: 0.4s ease-in-out; }
+        .atencion-card:hover i { animation: heartBeat 1.3s infinite; }
+        
+        .icon-wa { color: var(--verde-wa); } .icon-mail { color: var(--purpura-accent); } .icon-zoom { color: #2d8cff; }
+        .icon-visita { color: var(--rojo-soft); } .icon-tel { color: var(--naranja-accent); } .icon-chat { color: #0ea5e9; }
+
+        /* CHAT IA COMPLETO */
+        #ai-chat-window {
+            position: fixed; bottom: 120px; right: 30px; width: 400px; height: 550px;
+            background: white; border-radius: 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            display: none; flex-direction: column; overflow: hidden; z-index: 10001; border: 1px solid #f1f1f1;
+        }
+        .chat-header { background: var(--azul-accent); color: white; padding: 25px; display: flex; justify-content: space-between; align-items: center; font-family: 'Lexend'; font-weight: 700; }
+        .chat-messages { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fcfdfe; }
+        .chat-bubble { padding: 14px 20px; border-radius: 20px; max-width: 85%; font-size: 0.95rem; line-height: 1.5; }
+        .chat-bubble.ai { background: #f1f5f9; color: var(--azul-deep); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-bubble.user { background: var(--azul-accent); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .typing { font-style: italic; font-size: 0.85rem; color: #aaa; margin-bottom: 10px; display: none; }
+        .chat-input-box { padding: 20px; border-top: 1px solid #f1f1f1; display: flex; gap: 12px; background: white; }
+        .chat-input-box input { flex: 1; border: 1px solid #e2e8f0; padding: 14px 22px; border-radius: 35px; outline: none; transition: 0.3s; }
+        .chat-input-box button { background: var(--azul-accent); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+
+        /* BOTONES FLOTANTES CON TOOLTIPS */
+        .floating-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 18px; z-index: 10000; }
+        .btn-float { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; border: none; color: white; position: relative; }
+        
+        .btn-wa { background: var(--verde-wa); }
+        .btn-wa i { animation: heartBeat 2s infinite; }
+        
+        .btn-ai { background: var(--azul-accent); }
+        .btn-float:hover { transform: scale(1.1) rotate(5deg); }
+
+        .float-tooltip {
+            position: absolute; right: 85px; top: 50%; transform: translateY(-50%);
+            background: var(--azul-deep); color: white; padding: 12px 20px; border-radius: 15px;
+            font-size: 0.9rem; font-weight: 700; white-space: nowrap; opacity: 0;
+            pointer-events: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: fadeInRight 0.8s forwards; animation-delay: 2s;
+        }
+        .wa-tooltip { background: #075e54; } 
+
+        .float-tooltip::after { 
+            content: ''; position: absolute; right: -8px; top: 50%; transform: translateY(-50%); 
+            border-top: 8px solid transparent; border-bottom: 8px solid transparent; 
+            border-left: 8px solid var(--azul-deep); 
+        }
+        .wa-tooltip::after { border-left-color: #075e54; }
+
+        @keyframes fadeInRight { from { opacity: 0; transform: translateY(-50%) translateX(20px); } to { opacity: 1; transform: translateY(-50%) translateX(0); } }
+
+        /* FOOTER */
+        footer { background: var(--azul-deep); color: white; padding: 120px 8% 60px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 80px; }
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1s ease-out; }
+        .reveal.show { opacity: 1; transform: none; }
+
+        @media (max-width: 1100px) { 
+            .dif-grid, .atencion-grid, .steps-container { grid-template-columns: repeat(2, 1fr); }
+            .nosotros-content, .footer-grid, .panel.open { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader"><div class="loader-content"><div class="loader-logo"><strong>LOREM</strong><span>Ipsum</span></div><div class="loader-circle"></div></div></div>
+
+    <div class="floating-container">
+        <button class="btn-float btn-ai" onclick="toggleChat()">
+            <div class="float-tooltip">¿Dudas? ¡Pregúntame aquí!</div>
+            <i class="fa-solid fa-robot"></i>
+        </button>
+        <a href="https://wa.me/56912345678" class="btn-float btn-wa" target="_blank">
+            <div class="float-tooltip wa-tooltip">¿Dudas? ¡Pregúntame aquí!</div>
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <div id="ai-chat-window">
+        <div class="chat-header">
+            <div><i class="fa-solid fa-robot"></i> <strong>Asistente IA</strong></div>
+            <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages" id="chat-box">
+            <div class="chat-bubble ai">¡Hola! Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <div class="typing" id="typing-indicator">La IA está pensando...</div>
+        </div>
+        <div class="chat-input-box">
+            <input type="text" id="ai-user-input" placeholder="Escribe aquí..." onkeypress="if(event.key === 'Enter') sendAIMessage()">
+            <button onclick="sendAIMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#" class="logo">LOREM<span>Ipsum</span></a>
+        <ul class="nav-links">
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#ventajas">Ventajas</a></li>
+            <li><a href="#servicios">Soluciones</a></li>
+            <li><a href="#canales">Contacto</a></li>
+        </ul>
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <header>
+        <div class="reveal animate__animated animate__fadeInUp">
+            <h1>Lorem Ipsum Dolor<br>Sit Amet Consectetur</h1>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <a href="#canales" class="btn-shimmer">Comenzar Evaluación</a>
+        </div>
+    </header>
+
+    <section class="section-container" id="nosotros">
+        <div class="nosotros-content reveal">
+            <div class="nosotros-text">
+                <h2>Quienes somos</h2>
+                <p>Somos una empresa enfocada en la asesoría y gestión integral de créditos hipotecarios mediante diversas instituciones financieras. Junto con esto también realizamos postulaciones a diversos subsidios. Nos encargamos de cada detalle desde el área de tasación, estudios de títulos, notaría, conservador y la liberación del pago al vendedor. Podemos llegar a un 100% de financiamiento, sobre alzando el valor de la vivienda.</p>
+            </div>
+            <div class="nosotros-image"></div>
+        </div>
+    </section>
+
+    <section class="section-container" id="ventajas">
+        <h2 class="section-title reveal">Lorem Ipsum Ventajas</h2>
+        <div class="dif-grid reveal">
+            <div class="dif-card">
+                <i class="fa-solid fa-percent"></i>
+                <h4>Lorem Ipsum</h4>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+            <div class="dif-card">
+                <i class="fa-solid fa-bolt-lightning"></i>
+                <h4>Lorem Ipsum</h4>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <div class="dif-card">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <h4>Lorem Ipsum</h4>
+                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="solutions-wrapper">
+        <section class="section-container" id="servicios">
+            <h2 class="section-title reveal">Lorem Soluciones</h2>
+            <div class="carousel-window">
+                <button class="nav-arrow arrow-prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="services-grid" id="carousel">
+                    <div class="service-card card-1" onclick="toggleDetails('s1')"><i class="fa-solid fa-file-invoice-dollar"></i><h3>Leasing habitacional</h3></div>
+                    <div class="service-card card-2" onclick="toggleDetails('s2')"><i class="fa-solid fa-key"></i><h3>Lorem 2</h3></div>
+                    <div class="service-card card-3" onclick="toggleDetails('s3')"><i class="fa-solid fa-landmark"></i><h3>Lorem 3</h3></div>
+                    <div class="service-card card-4" onclick="toggleDetails('s4')"><i class="fa-solid fa-hand-holding-heart"></i><h3>Lorem 4</h3></div>
+                    <div class="service-card card-5" onclick="toggleDetails('s5')"><i class="fa-solid fa-shield-halved"></i><h3>Lorem 5</h3></div>
+                </div>
+                <button class="nav-arrow arrow-next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div id="info-panel" class="panel">
+                <div class="panel-info"><h3 id="panel-t"></h3><p id="panel-d"></p></div>
+                <div class="panel-img" id="panel-i"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="steps-wrapper">
+        <section class="section-container" id="pasos">
+            <h2 class="section-title reveal">Lorem en 4 Pasos</h2>
+            <div class="steps-container reveal">
+                <div class="step-card"><div class="icon-wrapper"><i class="fa-solid fa-magnifying-glass-chart"></i></div><h4>Lorem 1</h4><p>Lorem ipsum dolor sit amet.</p></div>
+                <div class="step-card"><div class="icon-wrapper"><i class="fa-solid fa-handshake-angle"></i></div><h4>Lorem 2</h4><p>Consectetur adipiscing elit.</p></div>
+                <div class="step-card"><div class="icon-wrapper"><i class="fa-solid fa-file-signature"></i></div><h4>Lorem 3</h4><p>Sed do eiusmod tempor.</p></div>
+                <div class="step-card"><div class="icon-wrapper"><i class="fa-solid fa-house-circle-check"></i></div><h4>Lorem 4</h4><p>Ut labore et dolore magna.</p></div>
+            </div>
+        </section>
+    </div>
+
+    <section class="section-container" id="canales">
+        <h2 class="section-title reveal">Canales Lorem</h2>
+        <div class="atencion-grid reveal">
+            <div class="atencion-card" onclick="window.open('https://wa.me/56912345678')"><i class="fa-brands fa-whatsapp icon-wa"></i><h4>WhatsApp</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+            <div class="atencion-card"><i class="fa-solid fa-envelope icon-mail"></i><h4>Correo</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+            <div class="atencion-card"><i class="fa-solid fa-video icon-zoom"></i><h4>Video</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+            <div class="atencion-card"><i class="fa-solid fa-house-user icon-visita"></i><h4>Oficina</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+            <div class="atencion-card"><i class="fa-solid fa-phone icon-tel"></i><h4>Teléfono</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+            <div class="atencion-card"><i class="fa-solid fa-robot icon-chat"></i><h4>IA Chat</h4><p>Lorem ipsum dolor sit amet consectetur.</p></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid section-container">
+            <div class="footer-col"><h4>LOREM Ipsum</h4><p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p></div>
+            <div class="footer-col"><h4>Empresa</h4><ul><li>Lorem</li><li>Ipsum</li><li>Dolor</li></ul></div>
+            <div class="footer-col"><h4>Legal</h4><ul><li>Lorem</li><li>Ipsum</li></ul></div>
+            <div class="footer-col"><h4>Contacto</h4><p>Lorem City<br>lorem@ipsum.com</p></div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('fade-out');
+                document.body.style.overflow = 'auto';
+            }, 1200);
+        });
+
+        let currentOffset = 0;
+        const carousel = document.getElementById('carousel');
+        function moveSlide(dir) {
+            const winWidth = document.querySelector('.carousel-window').offsetWidth;
+            const cardWidth = 320 + 24; 
+            const maxScroll = carousel.scrollWidth - winWidth;
+            currentOffset += dir * cardWidth;
+            if (currentOffset < 0) currentOffset = 0;
+            if (currentOffset > maxScroll) currentOffset = maxScroll;
+            carousel.style.transform = `translateX(-${currentOffset}px)`;
+        }
+
+        function toggleDetails(tipo) {
+            const panel = document.getElementById('info-panel');
+            const data = {
+                /* ACTUALIZACIÓN DEL CONTENIDO REAL DE LEASING HABITACIONAL */
+                's1': { 
+                    t: 'Leasing habitacional', 
+                    d: 'Es crédito a un plazo máximo de 20 años en donde la escritura figura la institución financiera y el cliente como prominente comprador arrendatario, una vez que cancele la última cuota debe hacer el alzamiento y la propiedad pasa por completo a su nombre. A su vez tiene un beneficio del subsidio automático.', 
+                    i: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1000' 
+                },
+                's2': { t: 'Lorem Ipsum 2', d: 'Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae.', i: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800' },
+                's3': { t: 'Lorem Ipsum 3', d: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.', i: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800' },
+                's4': { t: 'Lorem Ipsum 4', d: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.', i: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800' },
+                's5': { t: 'Lorem Ipsum 5', d: 'Aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam.', i: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800' }
+            };
+            panel.style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('panel-t').innerText = data[tipo].t;
+                document.getElementById('panel-d').innerText = data[tipo].d;
+                document.getElementById('panel-i').style.backgroundImage = `url('${data[tipo].i}')`;
+                panel.style.display = 'grid';
+                panel.classList.add('open');
+            }, 50);
+        }
+
+        function toggleChat() { 
+            const chat = document.getElementById('ai-chat-window');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('ai-user-input');
+            const box = document.getElementById('chat-box');
+            const typing = document.getElementById('typing-indicator');
+            if(!input.value.trim()) return;
+            const text = input.value;
+            box.insertBefore(Object.assign(document.createElement('div'), {className: 'chat-bubble user', innerText: text}), typing);
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+            typing.style.display = 'block';
+            setTimeout(() => {
+                typing.style.display = 'none';
+                box.insertBefore(Object.assign(document.createElement('div'), {className: 'chat-bubble ai', innerText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}), typing);
+                box.scrollTop = box.scrollHeight;
+            }, 1800);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
